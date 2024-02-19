@@ -1,0 +1,61 @@
+/* MIS CARTAS*/
+
+.card-list {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    transition: transform 0.3s ease;
+    position: relative;
+  }
+
+  .card-list img {
+    max-width: 100px;
+    margin: 0 5px;
+    transition: transform 0.2s ease;
+  }
+
+  .card-list img:hover {
+    transform: translateY(-10px);
+  }
+
+  .card-list-button {
+    background: none;
+    border: none;
+    font-size: 24px;
+    padding: 5px;
+    cursor: pointer;
+    transform-origin: center center;
+  }
+
+  .card-list-button.prev {
+    display: flex;
+    align-items: center;
+    left: 10px;
+  }
+
+  .card-list-button.next {
+    display: flex;
+    align-items: center;
+    right: 10px;
+  }
+  
+  .card-list-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 0px;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  #nextButton{
+    padding-right: 20px;
+  }
+
+  #prevButton{
+    padding-left: 20px;
+  }
+
+  

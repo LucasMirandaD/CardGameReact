@@ -1,0 +1,16 @@
+#cabecera {
+    background-color: #6473c7;
+}
+
+.player-card-count {
+    position: absolute;
+    top: -25px; /* Ajustar la distancia vertical desde las cartas */
+    right: 0;
+    padding: 5px 10px;
+    background-color: #f44336; /* Color de fondo del contador */
+    color: #fff; /* Color del texto del contador */
+    border-radius: 15px; /* Ajustar el valor para controlar la forma del rectángulo */
+    font-size: 16px; /* Tamaño de fuente del contador */
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Sombra para resaltar el contador */
+  }

@@ -1,0 +1,25 @@
+.profile-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-bottom: 2px;
+}
+
+.logo-image{
+    width: auto;
+    height: 50px;
+}
+
+header {
+    background-color: #3f51b5;
+}
+
+/* Header.css */
+.navbar-nav a {
+    font-weight: normal; /* Estilo por defecto para los enlaces */
+}
+  
+.navbar-nav a:hover {
+    font-weight: bold; /* Estilo al pasar el mouse por encima */
+}
+  

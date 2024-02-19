@@ -1,0 +1,53 @@
+.profile-pic {
+    width: 150px;
+    height: 150px;
+    transition: transform 0.3s ease;
+}
+
+.profile-pic:hover {
+    border: 5px solid transparent;
+    border-radius: 50%;
+    background-image: radial-gradient(
+      circle at center,
+      #ff0000,
+      #ff4000,
+      #ff8000,
+      #ffbf00,
+      #ffff00,
+      #bfff00,
+      #80ff00,
+      #40ff00,
+      #00ff00,
+      #00ff40,
+      #00ff80,
+      #00ffbf,
+      #00ffff,
+      #00bfff,
+      #0080ff,
+      #0040ff,
+      #0000ff,
+      #4000ff,
+      #8000ff,
+      #bf00ff,
+      #ff00ff,
+      #ff00bf,
+      #ff0080,
+      #ff0040);
+    /* Agregamos más colores al gradiente del arcoíris */
+    background-size: 1000% 1000%;
+    animation: gradientAnimation 10s ease infinite;
+    transform: scale(1.1); /* Agrandamos la imagen en un 20% */
+  }
+
+  @keyframes gradientAnimation {
+    0% {
+      background-position: 0% 50%;
+    }
+    100% {
+      background-position: 100% 50%;
+    }
+  }
+
+  #fileInput{
+    display: none;
+  }

@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Juego de UNO</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <style>
+      
+      /* BASE JUEGO*/
+      .game-container {
+        max-width: 800px;
+        margin: 0 auto;
+        margin-top: 50px;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      #carta-mesa{
+        max-width: 200px; 
+        margin-right: 30px;
+      }
+
+      #cartas-mesa{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      #botones-partida{
+        color: white;
+      }
+
+      /* MIS CARTAS*/
+
+      .card-list {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        margin: 0;
+        padding: 0;
+        transition: transform 0.3s ease;
+        position: relative;
+      }
+
+      .card-list img {
+        max-width: 100px;
+        margin: 0 5px;
+        transition: transform 0.2s ease;
+      }
+
+      .card-list img:hover {
+        transform: translateY(-10px);
+      }
+
+      .card-list-button {
+        background: none;
+        border: none;
+        font-size: 24px;
+        padding: 5px;
+        cursor: pointer;
+        transform-origin: center center;
+      }
+
+      .card-list-button.prev {
+        display: flex;
+        align-items: center;
+        left: 10px;
+      }
+
+      .card-list-button.next {
+        display: flex;
+        align-items: center;
+        right: 10px;
+      }
+      
+      .card-list-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 0px;
+        overflow-x: hidden;
+        position: relative;
+      }
+
+      #nextButton{
+        padding-right: 20px;
+      }
+
+      #prevButton{
+        padding-left: 20px;
+      }
+
+      /* JUGADORES */
+
+      .player-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        text-align: right;
+      }
+
+      .player-list li {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+
+      .player-list li img {
+        max-width: 50px;
+        border-radius: 50%;
+        margin-left: 10px;
+      }
+
+      .player-info {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        text-align: center;
+      }
+
+      .card-count {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        display: inline-block;
+        background-color: #f44336;
+        color: #fff;
+        border-radius: 50%;
+        width: 25px;
+        height: 25px;
+        text-align: center;
+        font-size: 14px;
+      }
+      
+      .player-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        margin-bottom: 10px;
+      }
+      
+      .player-info img {
+        max-width: 50px;
+        border-radius: 50%;
+        margin-bottom: 10px;
+      }
+      
+      .player-name {
+        font-weight: bold;
+        margin-top: 5px;
+      }
+
+      .player-list-button {
+        background: none;
+        border: none;
+        font-size: 24px;
+        padding: 5px;
+        cursor: pointer;
+        transform-origin: center center;
+      }
+
+      .player-list-button i {
+        color: #000;
+      }
+
+      .player-list-container{
+        margin-top: 10px; 
+        margin-bottom: 10px;
+      }
+      
+      /*HEADER*/
+   
+      header {
+        background-color: #3f51b5;
+      }
+      
+      #mi-imagen {
+        max-width: 50px;
+        border-radius: 50%;
+        margin-bottom: 10px;
+      }
+
+      #foto-perfil{
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        margin-bottom: 2px;
+      }
+      
+      #logo{
+        width: auto; height: 50px;
+      }
+      
+
+      /* TODOS */
+      button {
+        transform-origin: center center;
+      }
+
+      button:focus {
+        outline: none;
+      }
+
+      button:active {
+        transform: scale(0.9);
+      }
+      
+      .button-container {
+        display: flex;
+        justify-content: center;
+      }
+      
+      /* contador de cartas*/
+      .player-card-count {
+        position: absolute;
+        top: -25px; /* Ajustar la distancia vertical desde las cartas */
+        right: 0;
+        padding: 5px 10px;
+        background-color: #f44336; /* Color de fondo del contador */
+        color: #fff; /* Color del texto del contador */
+        border-radius: 15px; /* Ajustar el valor para controlar la forma del rectángulo */
+        font-size: 16px; /* Tamaño de fuente del contador */
+        font-weight: bold;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Sombra para resaltar el contador */
+      }
+
+    </style>
+  </head>
+  <body class="bg-light">
+    <header class="py-3">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-9">
+            <nav class="navbar navbar-expand-lg navbar-light">
+              <a class="navbar-brand text-white" href="#">
+                <img
+                  src="./cartas/logo.png"
+                  alt="Logo"
+                  id="logo"
+                />
+              </a>
+              <button
+                class="navbar-toggler"
+                type="button"
+                data-toggle="collapse"
+                data-target="#navbarNav"
+              >
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="navbar-nav">
+                  <a class="nav-link text-white" href="#">Crear partida</a>
+                  <a class="nav-link text-white" href="#">Unirse partida</a>
+                  <a class="nav-link text-white" href="#">Mis partidas</a>
+                  <a class="nav-link text-white" href="#">Contacto</a>
+                </div>
+              </div>
+            </nav>
+          </div>
+          <div class="col-3 d-flex flex-column align-items-center">
+            <img
+              src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+              alt="Foto de perfil"
+              id="foto-perfil"
+            />
+            <span class="text-white">Jugador 1</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="container">
+      
+      <div class="row no-gutters">
+        
+        <!-- CARTAS -->
+        <div class="col-9 game-container">
+          
+          <div class="player-card-count">5 cartas</div> 
+
+          <div class="row">
+            <div class="col">
+              <div
+                class="card-on-table"
+                id="cartas-mesa"
+              >
+                <img
+                  src=".\cartas\rojo\3.png"
+                  alt="Carta en la mesa"
+                  id="carta-mesa"
+                />
+                <img
+                  src=".\cartas\dorso.png"
+                  alt="Carta en la mesa"
+                  id="carta-mesa"
+                />
+              </div>
+            </div>
+          </div>
+          <hr />
+          <div class="row">
+            <div class="col-1 d-flex align-items-center">
+              <button
+                class="card-list-button prev align-self-center"
+                id="prevButton"
+              >
+                <i class="fas fa-chevron-left"></i>
+              </button>
+            </div>
+
+            <div class="col">
+              <div class="card-list-container">
+                <div class="card-list" id="cardList">
+                  <img
+                    src=".\cartas\azul\9.png"
+                    alt="Carta 1"
+                    class="mb-3 mt-3"
+                  />
+                  <img
+                    src=".\cartas\rojo\6.png"
+                    alt="Carta 2"
+                    class="mb-3 mt-3"
+                  />
+                  <img
+                    src=".\cartas\amarillo\0.png"
+                    alt="Carta 3"
+                    class="mb-3 mt-3"
+                  />
+                  <img
+                    src=".\cartas\amarillo\0.png"
+                    alt="Carta 4"
+                    class="mb-3 mt-3"
+                  />
+                  <!-- Contenido de las cartas -->
+                </div>
+              </div>
+            </div>
+            <div class="col-1 d-flex align-items-center">
+              <button
+                class="card-list-button next align-self-center"
+                id="nextButton"
+              >
+                <i class="fas fa-chevron-right"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- JUGADORES -->
+        <div class="col-2 game-container">
+          <div class="button-container">
+            <button class="player-list-button prev" id="prevPlayerButton">
+              <i class="fas fa-chevron-up"></i>
+            </button>
+          </div>
+          <div
+            class="player-list-container"
+          >
+            <ul class="player-list" id="playerList">
+              <!-- Contenido de la lista de jugadores -->
+              <li class="player-item">
+                <div class="player-info">
+                  <img
+                    src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+                    alt="Avatar jugador 2"
+                  />
+                  <span class="card-count">5</span>
+                </div>
+                <span class="player-name">Jugador 1</span>
+              </li>
+              <hr />
+              <li class="player-item">
+                <div class="player-info">
+                  <img
+                    src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+                    alt="Avatar jugador 2"
+                  />
+                  <span class="card-count">5</span>
+                </div>
+                <span class="player-name">Jugador 2</span>
+              </li>
+              <hr />
+              <li class="player-item">
+                <div class="player-info">
+                  <img
+                    src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+                    alt="Avatar jugador 2"
+                  />
+                  <span class="card-count">5</span>
+                </div>
+                <span class="player-name">Jugador 3</span>
+              </li>
+              <hr />
+              <li class="player-item">
+                <div class="player-info">
+                  <img
+                    src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+                    alt="Avatar jugador 2"
+                  />
+                  <span class="card-count">5</span>
+                </div>
+                <span class="player-name">Jugador 4</span>
+              </li>
+              <!-- Agrega más jugadores según sea necesario -->
+            </ul>
+          </div>
+          <div class="button-container">
+            <button class="player-list-button next" id="nextPlayerButton">
+              <i class="fas fa-chevron-down"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="row no-gutters">
+        <div class="col-9 d-flex justify-content-center mt-3">
+          <button class="btn btn-success mr-4" id="botones-partida">
+            Restablecer partida
+          </button>
+          <button class="btn btn-danger" id="botones-partida" >
+            Terminar partida
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+  </body>
+</html>
