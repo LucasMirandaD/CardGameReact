@@ -16,6 +16,7 @@ function Game() {
   const { token } = useParams();
   const [playerCards, setPlayerCards] = useState([]);
   const [players, setPlayers] = useState([]);
+  const [wasDealt, setWasDealt] = useState(false);
   const [amount, setAmount] = useState(0);
   const [lastCard, setLastCard] = useState();
   const [showPopup, setShowPopup] = useState(false);
@@ -43,6 +44,7 @@ function Game() {
       });
       if (response.status === 200) {
          setGameInfo(response.data.board);
+         setWasDealt(response.data.board.was_dealt)
         if (response.data.winner){
           setWarningMessage("La partida ha finalizado");
         }
@@ -140,6 +142,7 @@ function Game() {
       });
       if (response.status === 200) {
         setsuccessMessage('Se entregaron las cartas correctamente');
+        setWasDealt(true);
       }
     } catch (error){
       setErrorMessage('No se pudo entregar las cartas');
@@ -148,6 +151,7 @@ function Game() {
   };
 
   const takeCard = async () => {
+    if(gameInfo.deck.content.length != 0){
     try {
       const response = await axios.post(`${apiDomain}board/take_card`, resquestBodyBoard, {
         headers: {
@@ -160,8 +164,9 @@ function Game() {
       }
     } catch (error) {
       console.error("Error al obtener carta del mazo");
-    }
-  };
+    };
+  }else{ shuffleCards() };
+};
 
   const throwCard = async (cardId,cardUrl) => {
 
@@ -189,7 +194,7 @@ function Game() {
     }
   };
 
-  const LastCard = async () => {
+  const getLastCard = async () => {
     try {
       const response = await axios.post(`${apiDomain}board/last_card`, resquestBodyBoard, {
         headers: {
@@ -202,6 +207,21 @@ function Game() {
       }
     } catch (error) {
       console.error("Error al obtener ultima carta");
+    }
+  };
+
+  const shuffleCards = async () => {
+    try {
+      const response = await axios.get(`${apiDomain}boards/${token}/shuffle_cards`, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      if (response.status === 200) {
+        console.log("Se mezclaron las cartas",response.data);
+      }
+    } catch (error) {
+      console.error("Error al mezclar las cartas");
     }
   };
 
@@ -218,11 +238,11 @@ function Game() {
     }
   };
 
-  const finishGame = async (playerId) => {
+  const finishGame = async () => {
 
     const resquetDataCard = {
       board: {
-        winner: playerId
+        winner: gameInfo.player1_score > gameInfo.player2_score ? gameInfo.player1_id : gameInfo.player2_id
       }
     };
     const resquestBodyBoard = JSON.stringify(resquetDataCard);
@@ -244,9 +264,10 @@ function Game() {
 
   const resetGame = async () => {
     try {
-      const response = await axios.put(apiDomain + 'v1/games/'+token+'/cards',{}, {
+      const response = await axios.post(`${apiDomain}boards/${token}/reset_game`, {}, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem("token")}`,
+          'Content-Type': 'application/json'
         },
       });
       if (response.status === 200) {
@@ -265,7 +286,7 @@ function Game() {
     const intervalId = setInterval( () => {
      getGameInfo();
      getPlayerInfo(localStorage.getItem('id'));
-     LastCard();
+     getLastCard();
   }, 1000);
 
     window.addEventListener('keydown', handleKeyPress);
@@ -331,16 +352,20 @@ function Game() {
         {localStorage.getItem("id") === gameInfo.player1_id? // esto es para el admin o player1 que es quien crea la partida
         <div className="row no-gutters">
           <div className="col-9 d-flex justify-content-center mt-3">
-            <button className="btn btn-success mr-4" id="botones-partida" onClick={dealCards}>
-              Repartir cartas
+          {wasDealt === false ? (
+            <button className="btn btn-success mr-2" id="botones-partida" onClick={dealCards}>
+                Repartir
             </button>
-            <button className="btn btn-success mr-4" id="botones-partida" onClick={resetGame}>
+        ) : ""}
+
+            <button className="btn btn-success mr-2" id="botones-partida" onClick={resetGame}>
               Restablecer partida
             </button>
-            <button className="btn btn-danger" id="botones-partida" 
-            onClick={finishGame}
-            >
-              Terminar partida
+            <button className="btn btn-success mr-2" id="botones-partida" onClick={shuffleCards}>
+              Mezclar
+            </button>
+            <button className="btn btn-danger" id="botones-partida" onClick={finishGame}>
+              Finalizar
             </button>
           </div>
         </div>
@@ -352,7 +377,6 @@ function Game() {
             {warningMessage && <Warning description={warningMessage} />}
           </div>
         </div>
-        
       </div>
       {showPopup && <Scores gameInfo={gameInfo} token={token} />}
     </div>
