@@ -44,7 +44,8 @@ function Game() {
       });
       if (response.status === 200) {
          setGameInfo(response.data.board);
-         setWasDealt(response.data.board.was_dealt)
+         localStorage.setItem('gameInfo');
+         setWasDealt(response.data.board.was_dealt);
         if (response.data.winner){
           setWarningMessage("La partida ha finalizado");
         }
@@ -151,7 +152,6 @@ function Game() {
   };
 
   const takeCard = async () => {
-    if(gameInfo.deck.content.length != 0){
     try {
       const response = await axios.post(`${apiDomain}board/take_card`, resquestBodyBoard, {
         headers: {
@@ -162,10 +162,12 @@ function Game() {
       if (response.status === 200) {
         setPlayerCards([...playerCards, response.data.card]); // agrego la carta que acabo de tomar
       }
+      if (response.status === 204) {
+        setWarningMessage(response.data.message);
+      }
     } catch (error) {
       console.error("Error al obtener carta del mazo");
     };
-  }else{ shuffleCards() };
 };
 
   const throwCard = async (cardId,cardUrl) => {
@@ -375,6 +377,7 @@ function Game() {
         <div className="row no-gutters">
           <div className="col-9 d-flex justify-content-center">
             {warningMessage && <Warning description={warningMessage} />}
+            {errorMessage && <Error description={errorMessage} />}
           </div>
         </div>
       </div>
