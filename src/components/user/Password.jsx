@@ -67,7 +67,8 @@ function Password() {
 
         const requestData = {
             player: {
-                password: passwords.current_password
+                new_password: passwords.new_password,
+                current_password: passwords.current_password
               }
           };
         const requestBody = JSON.stringify(requestData);
@@ -88,11 +89,12 @@ function Password() {
                     confirm_password: '',
                 });
             }
+
         } catch (error) {
+            console.log(error);
             if (error.response && error.response.data && error.response.data.messages) {
                 const messageList = error.response.data.messages;
-                const errorMessages = messageList.map(messageObj => messageObj.message);
-                setErrorMessages(prevErrors => [...prevErrors, ...errorMessages.flat()]);
+                setErrorMessages(prevErrors => [...prevErrors, ...messageList.flat()]);
             }
         }
         

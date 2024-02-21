@@ -37,37 +37,37 @@ function Register() {
     if (formData.password === formData.confirm_password) {
       const requestData = {
         player: {
+          name: formData.name,
           nickname: formData.nickname,
           email: formData.email,
           password: formData.password
         }
         
       };
-      try {
+      
         const requestBody = JSON.stringify(requestData);
-        const response = await axios.post(`${apiDomain}players`, requestBody, {
+        axios.post(`${apiDomain}players`, requestBody, {
           headers: {
             'Content-Type': 'application/json',
           },
+        }).then((response) => {
+          console.log(response);
+          let respuesta = JSON.parse(response.data.player)
+          if (response.status === 200) {
+            localStorage.setItem('id', respuesta.id);
+            localStorage.setItem('token', respuesta.token);
+            navigate('/home');
+          }
+        }).catch ((error) => {
+          if (error.response && error.response.data && error.response.data.messages) {
+            const messageList = error.response.data.messages;
+            const errorMessages = messageList.map(messageObj => messageObj.message);
+            console.log(errorMessages);
+            setErrors(prevErrors => [...prevErrors, ...errorMessages.flat()]);
+          } else {
+            console.log('Ha ocurrido un error en la petición');
+          }
         });
-        if (response.status === 200) {
-          // console.log(response.data)
-
-          localStorage.setItem('id', response.data.id);
-          localStorage.setItem('token', response.data.token);
-          navigate('/home');
-        }
-        
-      } catch (error) {
-        if (error.response && error.response.data && error.response.data.messages) {
-          const messageList = error.response.data.messages;
-          const errorMessages = messageList.map(messageObj => messageObj.message);
-          console.log(errorMessages);
-          setErrors(prevErrors => [...prevErrors, ...errorMessages.flat()]);
-        } else {
-          console.log('Ha ocurrido un error en la petición');
-        }
-      }
     } else {
       setErrors(prevErrors => [...prevErrors, 'Las contraseñas no coinciden']);
     }
@@ -94,11 +94,19 @@ function Register() {
                 <div className="card-body">
                   <h2 className="text-center mb-4">Crear una cuenta</h2>
                   <form onSubmit={handleSubmit}>
+                  <InputForm
+                      id="name"
+                      type="text"
+                      placeholder="Ingrese su nombre"
+                      description="Nombre"
+                      value={formData.name}
+                      onChange={handleChange}
+                    />
                     <InputForm
                       id="nickname"
                       type="text"
                       placeholder="Ingrese su usuario"
-                      description="Nombre de usuario"
+                      description="Nickname"
                       value={formData.nickname}
                       onChange={handleChange}
                     />
