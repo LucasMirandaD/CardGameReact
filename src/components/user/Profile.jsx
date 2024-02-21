@@ -37,6 +37,7 @@ function Profile() {
   
         if (response.status === 200) {
           setUserInfo({
+            name: response.data.player.name,
             nickname: response.data.player.nickname,
             email: response.data.player.email,
             image_url: response.data.image_url,
@@ -170,6 +171,13 @@ function Profile() {
                         <InputForm 
                             type="text" 
                             id="name" 
+                            description="Nombre" 
+                            value={userInfo.name}
+                            readOnly={true}
+                        />
+                        <InputForm 
+                            type="text" 
+                            id="nickname" 
                             description="Nickname" 
                             value={userInfo.nickname}
                             readOnly={true}

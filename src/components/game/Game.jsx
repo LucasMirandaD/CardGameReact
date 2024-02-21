@@ -227,7 +227,7 @@ function Game() {
     }
   };
 
-  
+
   const handleKeyPress = (event) => {
     if (event.key === 'Control') {
       setShowPopup(true);

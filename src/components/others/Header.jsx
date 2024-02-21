@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 import './Header.css';
 
@@ -21,6 +21,7 @@ function Header() {
       if (response.status === 200) {
         setUserInfo({
           name: response.data.player.name,
+          nickname: response.data.player.nickname,
           email: response.data.player.email,
           image_url: response.data.image_url,
         });
@@ -90,10 +91,12 @@ function Header() {
               <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <a className="dropdown-item" href="/profile">Perfil</a>
                 <div className="dropdown-divider"></div>
-                <a className="dropdown-item" onClick={() => { localStorage.clear(); navigate('/'); }}>Cerrar sesión</a>
+                <Link to="/" className="dropdown-item" onClick={() => { localStorage.clear(); }}>
+                  Cerrar sesión
+                </Link>
               </div>
             </div>
-            <span className="text-white">{userInfo.name}</span>
+            <span className="text-white">{userInfo.name} ({userInfo.nickname})</span>
           </div>
           :<div></div>}
         </div>

@@ -54,8 +54,10 @@ function Create() {
                     id: response.data.board.id,
                     boardName: response.data.board.board_name,
                   });
-                setsuccessMessage("Partida creada correctamente. Token: "+boardInfo.id);
-                localStorage.setItem('boardId', response.data.board.id);
+                const boardId = response.data.board.id
+
+                setsuccessMessage("Partida creada correctamente. Token: "+boardId);
+                localStorage.setItem('boardId', boardId);
             }
         } catch (error) {
             if (error.response && error.response.data && error.response.data.messages) {
