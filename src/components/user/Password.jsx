@@ -50,7 +50,7 @@ function Password() {
         setsuccessMessage("");
         if (passwords.current_password == "" || passwords.new_password == "" || passwords.confirm_password==""){
             if (passwords.current_password == ""){
-                setErrorMessages((prevErrors) => [...prevErrors, 'Las contraseña actual no puede estar vacia']);
+                setErrorMessages((prevErrors) => [...prevErrors, 'La contraseña actual no puede estar vacia']);
             }
             if (passwords.new_password == ""){
                 setErrorMessages((prevErrors) => [...prevErrors, 'La nueva contraseña no puede estar vacia']);
@@ -61,7 +61,7 @@ function Password() {
             return;
         }
         if (passwords.new_password != passwords.confirm_password){
-            setErrorMessages((prevErrors) => [...prevErrors, 'Las nueva contraseña y su confirmación no coinciden']);
+            setErrorMessages((prevErrors) => [...prevErrors, 'La nueva contraseña y su confirmación no coinciden']);
             return
         }
 
