@@ -24,9 +24,9 @@ function Register() {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
-      navigate('/home');
+      // navigate('/home');
     }
-  }, [navigate]);
+  }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -82,8 +82,9 @@ function Register() {
       [id]: value,
     }));
   };
-
-  return (!localStorage.getItem("token")?(
+  // alert(localStorage.getItem('token'))
+  return (!localStorage.getItem('token')?(
+    // return (true)?(
     <div>
         <Header />
         <div className="container">
@@ -140,7 +141,7 @@ function Register() {
           </div>
         </div>
     </div>
-  ):(<div>{navigate('/home')}</div>)
+  ):null
   );
 }
 

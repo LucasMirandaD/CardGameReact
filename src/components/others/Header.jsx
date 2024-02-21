@@ -35,9 +35,6 @@ function Header() {
     if (localStorage.getItem("token")) {
       fetchUserInfo();
     }
-    else{
-      navigate('/login');
-    }
   }, []);
 
   return (
