@@ -21,7 +21,7 @@ function Join() {
 
   const redirectToGame = () => {
     if (boardId) {
-      navigate(`/boards/${boardId}`);
+      navigate(`/game/${boardId}`);
     } else {
       console.error("No existe la partida con este token");
     }
@@ -82,8 +82,8 @@ function Join() {
             setErrorMessages(prevErrors => [...prevErrors, "La partida ha finalizado"]);
             console.error("La partida ya ha finalizado");
           }
-          else if (response.data.board.player2_id === localStorage.getItem("id")){
-            console.log("Ya estabas unido a la partida. Redireccionando");
+          else if (response.data.board.player1_id === localStorage.getItem("id")){
+            alert("Ya estabas unido a la partida. Redireccionando");
             redirectToGame();
           }
           else{
@@ -97,7 +97,7 @@ function Join() {
             const messageList = error.response.data.messages;
             const errorMessages = messageList.map(messageObj => messageObj.message);
             setErrorMessages(prevErrors => [...prevErrors, ...errorMessages.flat()]);
-        }
+        };
     }
   };
 

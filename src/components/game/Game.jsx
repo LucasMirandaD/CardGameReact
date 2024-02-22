@@ -351,7 +351,7 @@ function Game() {
           </div>
         </div>
 
-        {localStorage.getItem("id") === gameInfo.player1_id? // esto es para el admin o player1 que es quien crea la partida
+        {((localStorage.getItem("id") === gameInfo.player1_id) && gameInfo.player2_id !== null)? // esto es para el admin o player1 que es quien crea la partida
         <div className="row no-gutters">
           <div className="col-9 d-flex justify-content-center mt-3">
           {wasDealt === false ? (

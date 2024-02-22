@@ -29,33 +29,6 @@
     color: white;
   }
 
-  
-  
-  
-  /*HEADER*/
-
-  header {
-    background-color: #3f51b5;
-  }
-  
-  #mi-imagen {
-    max-width: 50px;
-    border-radius: 50%;
-    margin-bottom: 10px;
-  }
-
-  #foto-perfil{
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    margin-bottom: 2px;
-  }
-  
-  #logo{
-    width: auto; height: 50px;
-  }
-  
-
   /* TODOS */
   button {
     transform-origin: center center;

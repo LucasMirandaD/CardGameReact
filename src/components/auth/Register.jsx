@@ -61,12 +61,17 @@ function Register() {
         }).catch ((error) => {
           if (error.response && error.response.data && error.response.data.messages) {
             const messageList = error.response.data.messages;
-            const errorMessages = messageList.map(messageObj => messageObj.message);
+            const errorMessages = messageList.map(messageObj => {
+              return Object.entries(messageObj).flatMap(([key, value]) => {
+                // Maneja el error de rails
+                return value.map(v => `${key}: ${v.error} - ${v.value}`);
+              });
+            }).flat();
             console.log(errorMessages);
-            setErrors(prevErrors => [...prevErrors, ...errorMessages.flat()]);
+            setErrors(prevErrors => [...prevErrors, ...errorMessages]);
           } else {
             console.log('Ha ocurrido un error en la petición');
-          }
+          }          
         });
     } else {
       setErrors(prevErrors => [...prevErrors, 'Las contraseñas no coinciden']);
@@ -77,11 +82,24 @@ function Register() {
 
   const handleChange = (event) => {
     const { id, value } = event.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [id]: value,
-    }));
+    setErrors([]);
+    if (validateEmail(formData.email)){
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        [id]: value,
+      }));
+    } else {
+      setErrors(prevErrors => [...prevErrors, 'Ingresa un mail valido']);
+    }
   };
+
+  function validateEmail(email) {
+    // Expresión regular para validar correo.
+    const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@(([^<>()[\]\\.,;:\s@"]+\.)+[^<>()[\]\\.,;:\s@"]{2,})$/i;
+    
+    return regex.test(String(email).toLowerCase());
+  }
+  
   // alert(localStorage.getItem('token'))
   return (!localStorage.getItem('token')?(
     // return (true)?(

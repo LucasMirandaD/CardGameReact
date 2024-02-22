@@ -190,9 +190,12 @@ function Profile() {
                             readOnly={true}
                         />
                         <button type="submit" className="btn btn-primary btn-block">
-                          <Link to="/password" style={{ color: 'white', textDecoration: 'none' }}>
+                          {/* <Link to="/password" style={{ color: 'white', textDecoration: 'none' }}>
                             Cambiar Contraseña
-                          </Link>
+                          </Link> */}
+                          <a className="nav-link text-white" href="/password">
+                            Cambiar Contraseña
+                          </a>
                         </button>
                         {/* <button type="submit" className="btn btn-primary btn-block" onClick={handleSaveChanges}>Guardar cambios</button> */}
                         <button type="button" className="btn btn-danger btn-block mt-2" onClick={deleteUser}>Borrar cuenta</button>
