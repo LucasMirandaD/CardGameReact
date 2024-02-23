@@ -347,13 +347,13 @@ function Game() {
           </div>
 
           <div className="col-2 game-container">
-            <PlayerList players={players} />            
+            <PlayerList players={players} /> 
           </div>
         </div>
 
         {((localStorage.getItem("id") === gameInfo.player1_id) && gameInfo.player2_id !== null)? // esto es para el admin o player1 que es quien crea la partida
         <div className="row no-gutters">
-          <div className="col-9 d-flex justify-content-center mt-3">
+          <div className="col-9 d-flex justify-content-center mt-3 game-container ">
           {wasDealt === false ? (
             <button className="btn btn-success mr-2" id="botones-partida" onClick={dealCards}>
                 Repartir
@@ -366,9 +366,11 @@ function Game() {
             <button className="btn btn-success mr-2" id="botones-partida" onClick={shuffleCards}>
               Mezclar
             </button>
-            <button className="btn btn-danger" id="botones-partida" onClick={finishGame}>
-              Finalizar
+            <button className="btn btn-danger mr-2" id="botones-partida" onClick={finishGame}>
+              Finalizar Partida
             </button>
+          </div>
+          <div className="col-2 d-flex justify-content-center game-container mt-3">
           </div>
         </div>
         :""
