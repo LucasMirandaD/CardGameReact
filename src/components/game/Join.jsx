@@ -122,7 +122,7 @@ function Join() {
           <div className="col-md-6">
             <div className="card shadow">
               <div className="card-body">
-                <h2 className="text-center">Unirse a la partida</h2>
+                <h2 className="text-center">Unirse a partida</h2>
                 <form onSubmit={handleSubmit}>
                   <div className="form-group">
                     <label htmlFor="boardId">Token</label>

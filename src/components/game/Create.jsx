@@ -85,10 +85,11 @@ function Create() {
                             <h2 className="text-center mb-4">Crear partida</h2>
                             <form onSubmit={handleSubmit}>
                                 <div className="form-group">
-                                    <label htmlFor="mode">Ingresa el nombre de tu tablero</label>
+                                    <label htmlFor="mode">Nombre de la partida</label>
                                     <InputForm 
                                     className="form-control" 
                                     id="boardName"
+                                    placeholder="Ingrese el nombre de la partida"
                                     value={boardInfo.boardName}
                                     onChange={handleName}
                                     />
