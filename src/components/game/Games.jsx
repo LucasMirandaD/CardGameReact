@@ -103,7 +103,7 @@ function Games() {
     <div>
       {!window.location.pathname.includes('/home') && <Header />}
       <div className="container mt-5">
-        <h2>Mis Partidas</h2>
+        <h2 className="font-weight-bold">Mis Partidas</h2>
         <div className="table-responsive">
           <table className="table table-bordered table-striped">
             <thead>

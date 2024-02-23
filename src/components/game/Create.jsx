@@ -79,13 +79,12 @@ function Create() {
         {!window.location.pathname.includes('/home') && <Header />}
         <div className="container">
             <div className="row justify-content-center mt-5">
-                <div className="col-md-6">
+                <div className="col-md-10">
                     <div className="card shadow">
                         <div className="card-body">
-                            <h2 className="text-center mb-4">Crear partida</h2>
+                            <h2 className="text-center mb-4 font-weight-bold">Crear partida</h2>
                             <form onSubmit={handleSubmit}>
                                 <div className="form-group">
-                                    <label htmlFor="mode">Nombre de la partida</label>
                                     <InputForm 
                                     className="form-control" 
                                     id="boardName"
@@ -94,7 +93,7 @@ function Create() {
                                     onChange={handleName}
                                     />
                                 </div>
-                                <button type="submit" className="btn btn-primary btn-block">Crear partida</button>
+                                <button type="submit" className="btn btn-primary btn-block">Crear</button>
                             </form>
                             {warningMessage && <Warning description={warningMessage} />}
                             {errorMessages.length > 0 && (

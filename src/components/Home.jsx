@@ -11,7 +11,7 @@ function Home() {
       <div className="container mt-5 col-md-9">
         <br />
         <center>
-          <h1>Tablero Principal</h1>
+          <h1 className='font-weight-bold'>Tablero Principal</h1>
         </center>
         <hr />
         <div className="row shadow mb-4">

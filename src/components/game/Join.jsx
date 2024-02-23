@@ -119,13 +119,13 @@ function Join() {
       {!window.location.pathname.includes('/home') && <Header />}
       <div className="container">
         <div className="row justify-content-center mt-5">
-          <div className="col-md-6">
+          <div className="col-md-10">
             <div className="card shadow">
               <div className="card-body">
-                <h2 className="text-center">Unirse a partida</h2>
+                <h2 className="text-center font-weight-bold">Unirse a partida</h2>
                 <form onSubmit={handleSubmit}>
                   <div className="form-group">
-                    <label htmlFor="boardId">Token</label>
+                    <label></label> {/* Esto solo es parra ocupar lugar*/}
                     <InputForm
                       type="text" 
                       id="boardId"
