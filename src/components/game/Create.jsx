@@ -76,7 +76,7 @@ function Create() {
 
     return (
     <div>
-        <Header/>
+        {!window.location.pathname.includes('/home') && <Header />}
         <div className="container">
             <div className="row justify-content-center mt-5">
                 <div className="col-md-6">

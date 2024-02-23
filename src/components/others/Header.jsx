@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import '@fortawesome/fontawesome-free/css/all.css';
 
 import './Header.css';
 
 import apiDomain from '../../config';
 
 function Header() {
-  const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState({});
 
   const fetchUserInfo = async () => {
@@ -43,13 +43,13 @@ function Header() {
         <div className="row align-items-center">
           <div className="col-9">
             <nav className="navbar navbar-expand-lg navbar-light">
-              <a className="navbar-brand text-white" href="/home">
+              <Link className="navbar-brand text-white" to="/home">
                 <img
                   src={apiDomain+"images/logo.png"}
                   alt="Logo"
                   className="logo-image"
                 />
-              </a>
+              </Link>
               <button
                 className="navbar-toggler"
                 type="button"
@@ -62,14 +62,17 @@ function Header() {
                 {
                 localStorage.getItem("token")?
                   <div className="navbar-nav">
-                    <a className="nav-link text-white" href="/create_game">Crear partida</a>
-                    <a className="nav-link text-white" href="/join_game">Unirse partida</a>
-                    <a className="nav-link text-white" href="/my_games">Mis partidas</a>
+                    <Link className="nav-link text-white" to="/create_game">Crear partida</Link>
+                    <Link className="nav-link text-white" to="/join_game">Unirse partida</Link>
+                    <Link className="nav-link text-white" to="/my_games">Mis partidas</Link>
+                    <Link to="/help" className="nav-link text-black">
+                      <i className="fas fa-question-circle"></i>
+                    </Link>
                   </div>
                 :
                   <div className="navbar-nav">
-                    <a className="nav-link text-white" href="/login">Iniciar sesión</a>
-                    <a className="nav-link text-white" href="/register">Crear cuenta</a>
+                    <Link className="nav-link text-white" to="/login">Iniciar sesión</Link>
+                    <Link className="nav-link text-white" to="/register">Crear cuenta</Link>
                   </div>
                 }
               </div>
@@ -86,7 +89,7 @@ function Header() {
                 data-toggle="dropdown"
               />
               <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a className="dropdown-item" href="/profile">Perfil</a>
+                <Link className="dropdown-item" to="/profile">Perfil</Link>
                 <div className="dropdown-divider"></div>
                 <Link to="/" className="dropdown-item" onClick={() => { localStorage.clear(); }}>
                   Cerrar sesión
@@ -102,4 +105,4 @@ function Header() {
   )
 }
 
-export default Header
+export default Header;

@@ -13,6 +13,7 @@ import Create from './components/game/Create';
 import Join from './components/game/Join';
 import Games from './components/game/Games';
 import Game from './components/game/Game';
+import Help from './components/others/Help';
 
 /* RUTAS */
 const routers = createBrowserRouter([
@@ -59,6 +60,10 @@ const routers = createBrowserRouter([
   {
     path: "*",
     element: <Login/>
+  },
+  {
+    path: "/help",
+    element: <Help/>
   }
 ])
 
