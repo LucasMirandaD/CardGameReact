@@ -3,6 +3,7 @@ import Header from './others/Header';
 import Create from './game/Create'; // Importa el componente Create
 import Join from './game/Join'; // Importa el componente Join
 import Games from './game/Games'; // Importa el componente Games
+import Wins from './game/Wins'; // Importa el componente Wins
 
 function Home() {
   return (
@@ -28,6 +29,11 @@ function Home() {
         <div className="row mb-5 shadow">
           <div className="col-md-12 ">
             <Games />
+          </div>
+        </div>
+        <div className="row mb-5 shadow">
+          <div className="col-md-12 ">
+            <Wins />
           </div>
         </div>
       </div>
