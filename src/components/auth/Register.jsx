@@ -46,6 +46,7 @@ function Register() {
     if (formData.password === formData.confirm_password) {
       const requestData = {
         player: {
+          name: formData.name,
           nickname: formData.nickname,
           email: formData.email,
           password: formData.password

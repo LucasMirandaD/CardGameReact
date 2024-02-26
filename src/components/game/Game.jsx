@@ -51,7 +51,7 @@ function Game() {
         }
       }
     } catch (error) {
-      console.error("Error al obtener puntaje del usuario");
+      console.error("Error al obtener la informacion del juego");
     }
   };
 
@@ -258,6 +258,8 @@ function Game() {
       });
       if (response.status === 200) {
         console.log("Partida finalizada");
+        setWarningMessage("Partida finalizada"); 
+        navigateWithDelay('/home', 3000);
       }
     } catch (error) {
       console.error("Error al obtener ultima carta");
@@ -280,6 +282,11 @@ function Game() {
     }
   };
 
+  const navigateWithDelay = (path, delay) => {
+    setTimeout(() => {
+      navigate(path);
+    }, delay); // delay en milisegundos
+  };
 
   useEffect(() => {
     if (!localStorage.getItem("token")) {
