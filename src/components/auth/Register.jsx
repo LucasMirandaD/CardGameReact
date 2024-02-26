@@ -59,9 +59,11 @@ function Register() {
       }).then((response) => {
         console.log(response);
         if (response.status === 200) {
-          const { id, token } = response.data.player;
-          localStorage.setItem('id', id);
-          localStorage.setItem('token', token);
+          const respuesta = JSON.parse(response.data.player);
+          console.log(respuesta.id);
+          console.log(respuesta.token);
+          localStorage.setItem('id', respuesta.id);
+          localStorage.setItem('token', respuesta.token);
           navigate('/home');
         }
       }).catch((error) => {
